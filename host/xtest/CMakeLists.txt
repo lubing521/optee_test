@@ -16,12 +16,14 @@ if(OPENSSL_FOUND)
 	set (OPENSSL_PRIVATE_LINK OpenSSL::Crypto)
 endif()
 
+find_package(Python REQUIRED)
+
 include(GNUInstallDirs)
 
 macro(EMBED_8100FILE prefix infile)
 	add_custom_command(
 		OUTPUT  regression_8100_${prefix}.h
-		COMMAND ${OPTEE_TEST_ROOT_DIR}/scripts/file_to_c.py --inf ${infile}
+		COMMAND ${Python_EXECUTABLE} ${OPTEE_TEST_ROOT_DIR}/scripts/file_to_c.py --inf ${infile}
 	--out ${CMAKE_CURRENT_BINARY_DIR}/regression_8100_${prefix}.h
 	--name regression_8100_${prefix}
 		DEPENDS ${OPTEE_TEST_ROOT_DIR}/scripts/file_to_c.py ${infile}
